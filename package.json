@@ -1,0 +1,52 @@
+{
+  "name": "ns-joycon-showcases",
+  "version": "0.1.0",
+  "description": "Play with Electron and node-hid",
+  "author": "Ze-Hao Wang (Salmon) <salmon.zh.tw@gmail.com> (https://salmon.tw)",
+  "main": "dist/app.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wazho/ns-joycon-showcases.git"
+  },
+  "scripts": {
+    "start": "electron . --enable-logging",
+    "dev": "NODE_ENV='development' npm run start",
+    "build": "shx rm -rf dist && tsc",
+    "build:eletron": "build -v"
+  },
+  "build": {
+    "appId": "com.wazho.ns-joycon-showcases",
+    "asar": true,
+    "npmRebuild": true,
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "publish": {
+      "provider": "github"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "pkg/icon.icns"
+    },
+    "win": {
+      "target": "zip",
+      "icon": "pkg/icon.ico"
+    }
+  },
+  "dependencies": {
+    "ns-joycon": "^0.1.3",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.7",
+    "three": "^0.103.0"
+  },
+  "devDependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/node-hid": "^0.7.0",
+    "@types/three": "^0.103.2",
+    "electron": "^4.0.4",
+    "electron-builder": "^20.38.5",
+    "electron-rebuild": "^1.8.4",
+    "shx": "^0.3.2",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.4"
+  }
+}
