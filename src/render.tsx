@@ -1,5 +1,10 @@
+// Node modules.
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as JoyCon from 'ns-joycon';
 import * as Three from 'three';
+// Local modules.
+import Toolbox from './components/Toolbox';
 
 let mesh: Three.Mesh;
 
@@ -15,8 +20,6 @@ joycons.forEach(async (device) => {
             mesh && mesh.rotation && (mesh.rotation.z += z);
         }
     });
-
-    await device.enableIMU();
 });
 
 initApp();
@@ -54,3 +57,8 @@ function initApp() {
         requestAnimationFrame(animate);
     }
 }
+
+ReactDOM.render(
+    <Toolbox joycons={joycons} />,
+    document.getElementById('root')
+);
