@@ -1,6 +1,6 @@
 {
   "name": "ns-joycon-showcases",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Play with Electron and node-hid",
   "author": "Ze-Hao Wang (Salmon) <salmon.zh.tw@gmail.com> (https://salmon.tw)",
   "main": "dist/app.js",
