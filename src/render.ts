@@ -3,14 +3,10 @@ import * as Three from 'three';
 
 let mesh: Three.Mesh;
 
-const { joyconDevices } = JoyCon.findDevices();
-const joycons = joyconDevices.map((device) => ({
-    device,
-    hid: JoyCon.convertToHumanInterfaceDevice(device),
-}));
+const { joycons } = JoyCon.findControllers();
 
-joycons.forEach(({ device, hid }) => {
-    JoyCon.addJoyConHandler(hid, (packet) => {
+joycons.forEach(async (device) => {
+    device.manageHandler('add', (packet) => {
         if (packet.inputReportID._raw[0] === 0x30) {
             const [x, y, z] = (packet as any).actualGyroscope.rps;
 
@@ -20,7 +16,7 @@ joycons.forEach(({ device, hid }) => {
         }
     });
 
-    JoyCon.enableJoyConIMU(hid);
+    await device.enableIMU();
 });
 
 initApp();
