@@ -28,6 +28,11 @@ let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 
 init();
+const fps = 15;
+const fpsInterval = 1000 / fps;
+let now = Date.now();
+let then = Date.now();
+let elapsed = now - then;
 animate();
 
 function init() {
@@ -67,7 +72,7 @@ function init() {
             scene.add(gltf.scene);
         });
 
-        // const geometry = new THREE.ConeGeometry(5, 20, 32);
+        // const geometry = new THREE.ConeGeometry(1, 1, 32);
         // const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         // const cone = new THREE.Mesh(geometry, material);
         // scene.add(cone);
@@ -84,7 +89,7 @@ function init() {
     renderer = new (THREE as any).WebGLRenderer({ canvas: canvas, context: context } as any);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.gammaOutput = true;
+    renderer.gammaOutput = false;
     container.appendChild(renderer.domElement);
 
     window.addEventListener('resize', onWindowResize, false);
@@ -103,8 +108,16 @@ function onWindowResize() {
 
 function animate() {
     requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-    // stats.update();
+
+    now = Date.now();
+    elapsed = now - then;
+
+    if (elapsed > fpsInterval) {
+        then = now - (elapsed % fpsInterval);
+
+        renderer.render(scene, camera);
+        // stats.update();
+    }
 }
 
 const { joycons } = JoyCon.findControllers();
@@ -112,11 +125,13 @@ const { joycons } = JoyCon.findControllers();
 joycons.forEach(async (device) => {
     device.manageHandler('add', (packet) => {
         if (packet.inputReportID._raw[0] === 0x30) {
+            // const date = new Date();
+            // console.log(date.getMilliseconds());
             const [x, y, z] = (packet as any).actualGyroscope.rps;
 
-            scene && scene.rotation && (scene.rotation.x += x * 20);
-            scene && scene.rotation && (scene.rotation.y += y * 20);
-            scene && scene.rotation && (scene.rotation.z += z * 20);
+            scene && scene.rotation && (scene.rotation.x += x * 4);
+            scene && scene.rotation && (scene.rotation.y += y * 4);
+            scene && scene.rotation && (scene.rotation.z += z * 4);
         }
     });
 });
