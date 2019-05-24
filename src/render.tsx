@@ -35,7 +35,7 @@ function init() {
     document.body.appendChild(container);
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
-    camera.position.set(-1.8, 0.9, 2.7);
+    camera.position.set(0, 0, 5);
 
     controls = new (THREE as any).OrbitControls(camera);
     controls.target.set(0, -0.2, -0.2);
@@ -62,13 +62,20 @@ function init() {
                 }
             });
 
+            gltf.scene.scale.set(0.25, 0.25, 0.25);
+            gltf.scene.position.set(-2.5, 0, 0);
             scene.add(gltf.scene);
         });
+
+        // const geometry = new THREE.ConeGeometry(5, 20, 32);
+        // const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        // const cone = new THREE.Mesh(geometry, material);
+        // scene.add(cone);
 
         pmremGenerator.dispose();
         pmremCubeUVPacker.dispose();
 
-        // scene.background = texture;
+        scene.background = texture;
     });
 
     var canvas = document.createElement('canvas');
@@ -107,9 +114,9 @@ joycons.forEach(async (device) => {
         if (packet.inputReportID._raw[0] === 0x30) {
             const [x, y, z] = (packet as any).actualGyroscope.rps;
 
-            scene && scene.rotation && (scene.rotation.x += x * 4);
-            scene && scene.rotation && (scene.rotation.y += y * 4);
-            scene && scene.rotation && (scene.rotation.z += z * 4);
+            scene && scene.rotation && (scene.rotation.x += x * 20);
+            scene && scene.rotation && (scene.rotation.y += y * 20);
+            scene && scene.rotation && (scene.rotation.z += z * 20);
         }
     });
 });
