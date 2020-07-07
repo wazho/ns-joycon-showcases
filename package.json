@@ -45,7 +45,7 @@
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
     "@types/three": "^0.103.2",
-    "electron": "^4.1.5",
+    "electron": "^7.2.4",
     "electron-builder": "^20.39.0",
     "electron-rebuild": "^1.8.4",
     "shx": "^0.3.2",
